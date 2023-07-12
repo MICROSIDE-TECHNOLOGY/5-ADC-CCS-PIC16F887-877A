@@ -1,0 +1,50 @@
+[PROJECT]
+Target=ADC.hex
+Processor_Text=PIC16F877A
+CCSVersion=5.076
+Compiler=PCM
+[Target Data]
+FileList=ADC.c
+[ADC.c]
+Type=4
+[mru-list]
+1=ADC.c
+
+[defines]
+buildcount=8
+
+[ProjectLog]
+Days=1
+D1=24-02-2022
+D1_L=12
+D1_L1=[38091]Started Editing.
+D1_L2=[38620]Stopped Editing.
+D1_L3=[38738]Started Editing.
+D1_L4=[39257]Stopped Editing.
+D1_L5=[39458]Started Editing.
+D1_L6=[39563]Project Closed.
+D1_L7=[58438]Project Opened.
+D1_L8=[58443]Started Editing.
+D1_L9=[58743]Stopped Editing.
+D1_L10=[59202]Started Editing.
+D1_L11=[59676]Stopped Editing.
+TotalEdit=3
+TotalDebug=0
+D1_E=3
+D1_D=0
+D1_L12=[59852]Project Closed.
+
+[Opened Files]
+1=ADC.c
+t1=1
+Count=3
+2=..\..\..\..\..\Program Files\PICC\Devices\16F877A.h
+t2=237
+3=..\Práctica 7\PWM1.c
+t3=237
+
+[fileformats]
+forcecoff=0
+[Units]
+Count=1
+1=ADC (main)

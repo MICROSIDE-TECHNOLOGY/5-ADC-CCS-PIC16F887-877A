@@ -1,0 +1,278 @@
+CCS PCM C Compiler, Version 5.076, 56587               24-feb.-22 16:30
+
+               Filename:   E:\Martin Hdez\Desktop\CCS 16F\877A\Práctica 5\ADC.lst
+
+               ROM used:   132 words (2%)
+                           Largest free fragment is 2048
+               RAM used:   6 (2%) at main() level
+                           6 (2%) worst case
+               Stack used: 0 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   016
+0003:  NOP
+.................... /* 
+.................... AUTOR: MICROSIDE TECHNOLOGY S.A. DE C.V. 
+.................... FECHA: JUNIO 2019 
+.................... */ 
+....................  
+.................... /* 
+.................... --------------------------------------------------------------------------- 
+.................... Implementar una lectura analógica de un potenciómetro y desplegar el valor 
+.................... en 8 LEDs 
+.................... --------------------------------------------------------------------------- 
+.................... */ 
+....................  
+.................... #include <16F877A.h>                            //Incluye el microcontrolador con el que se va a trabajar  
+.................... //////////// Standard Header file for the PIC16F877A device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877A 
+....................  
+.................... #list 
+....................  
+.................... #DEVICE ADC=8                                   //Configura el ADC a 8 bits 
+.................... #use delay(clock=20Mhz, crystal)                //Tipo de oscilador y frecuencia dependiendo del microcontrolador  
+....................  
+....................   
+.................... int ValorPot;                                   //Variable para almacenar el valor leído del ADC 
+....................  
+.................... void SisInit(void) 
+....................  
+.................... { 
+....................  
+.................... set_tris_b (0X00);                              //Configura todo el puerto B como salidas digitales 
+0004:  MOVLW  00
+0005:  BSF    03.5
+0006:  MOVWF  06
+....................  
+.................... setup_adc_ports (AN0);                          //Configura solo el puerto A0 como entrada analógica 
+0007:  BCF    1F.0
+0008:  BSF    1F.1
+0009:  BSF    1F.2
+000A:  BSF    1F.3
+....................  
+.................... setup_adc (ADC_CLOCK_DIV_8);                    //Configura oscilador para la conversión 
+000B:  BCF    1F.6
+000C:  BCF    03.5
+000D:  BSF    1F.6
+000E:  BCF    1F.7
+000F:  BSF    03.5
+0010:  BCF    1F.7
+0011:  BCF    03.5
+0012:  BSF    1F.0
+0013:  BCF    0A.3
+0014:  BCF    0A.4
+0015:  GOTO   023 (RETURN)
+....................  
+.................... } 
+....................  
+....................   
+....................  
+.................... void main() 
+0016:  MOVF   03,W
+0017:  ANDLW  1F
+0018:  MOVWF  03
+0019:  BSF    03.5
+001A:  BSF    1F.0
+001B:  BSF    1F.1
+001C:  BSF    1F.2
+001D:  BCF    1F.3
+001E:  MOVLW  07
+001F:  MOVWF  1C
+0020:  BCF    03.7
+....................  
+.................... { 
+....................               SisInit () ; 
+0021:  BCF    03.5
+0022:  GOTO   004
+....................  
+....................               while (1) 
+....................  
+....................                     { 
+....................  
+....................                           set_adc_channel (0);                       //Selecciona el canal 0 para la conversión 
+0023:  MOVLW  00
+0024:  MOVWF  78
+0025:  MOVF   1F,W
+0026:  ANDLW  C7
+0027:  IORWF  78,W
+0028:  MOVWF  1F
+....................  
+....................                          ValorPot = read_adc ();                     //Lee el valor del ADC y lo guarda en la variable 
+0029:  BSF    1F.2
+002A:  BTFSC  1F.2
+002B:  GOTO   02A
+002C:  MOVF   1E,W
+002D:  MOVWF  20
+....................  
+....................                           if (ValorPot <= 28)                        //Compara el valor de el ADC con 28 
+002E:  MOVF   20,W
+002F:  SUBLW  1C
+0030:  BTFSS  03.0
+0031:  GOTO   037
+....................  
+....................                                 { 
+....................  
+....................                                     output_b (0b00000000);           // Leds activos 
+0032:  BSF    03.5
+0033:  CLRF   06
+0034:  BCF    03.5
+0035:  CLRF   06
+....................                                 } 
+0036:  GOTO   082
+....................  
+....................                            else if (ValorPot <= 56)                  //Compara el valor de el ADC con 56 
+0037:  MOVF   20,W
+0038:  SUBLW  38
+0039:  BTFSS  03.0
+003A:  GOTO   041
+....................  
+....................                                 { 
+....................  
+....................                                     output_b (0b00000001);           // Leds activos 
+003B:  BSF    03.5
+003C:  CLRF   06
+003D:  MOVLW  01
+003E:  BCF    03.5
+003F:  MOVWF  06
+....................                                 } 
+0040:  GOTO   082
+....................  
+....................                             else if (ValorPot <= 84)                 //Compara el valor de el ADC con 84 
+0041:  MOVF   20,W
+0042:  SUBLW  54
+0043:  BTFSS  03.0
+0044:  GOTO   04B
+....................  
+....................                                 { 
+....................  
+....................                                     output_b (0b00000011);           // Leds activos 
+0045:  BSF    03.5
+0046:  CLRF   06
+0047:  MOVLW  03
+0048:  BCF    03.5
+0049:  MOVWF  06
+....................  
+....................                                 } 
+004A:  GOTO   082
+....................  
+....................                            else if (ValorPot <= 112)                //Compara el valor de el ADC con 112 
+004B:  MOVF   20,W
+004C:  SUBLW  70
+004D:  BTFSS  03.0
+004E:  GOTO   055
+....................  
+....................                                 { 
+....................  
+....................                                       output_b (0b00000111);        // Leds activos 
+004F:  BSF    03.5
+0050:  CLRF   06
+0051:  MOVLW  07
+0052:  BCF    03.5
+0053:  MOVWF  06
+....................  
+....................                                 } 
+0054:  GOTO   082
+....................  
+....................                            else if (ValorPot <= 140)                //Compara el valor de el ADC con 140 
+0055:  MOVF   20,W
+0056:  SUBLW  8C
+0057:  BTFSS  03.0
+0058:  GOTO   05F
+....................  
+....................                                 { 
+....................  
+....................                                       output_b (0b00001111);       // Leds activos 
+0059:  BSF    03.5
+005A:  CLRF   06
+005B:  MOVLW  0F
+005C:  BCF    03.5
+005D:  MOVWF  06
+....................  
+....................                                 } 
+005E:  GOTO   082
+....................  
+....................                             else if (ValorPot <= 168)              //Compara el valor de el ADC con 168 
+005F:  MOVF   20,W
+0060:  SUBLW  A8
+0061:  BTFSS  03.0
+0062:  GOTO   069
+....................  
+....................                                  { 
+....................  
+....................                                         output_b (0b00011111);     // Leds activos 
+0063:  BSF    03.5
+0064:  CLRF   06
+0065:  MOVLW  1F
+0066:  BCF    03.5
+0067:  MOVWF  06
+....................  
+....................                                  } 
+0068:  GOTO   082
+....................  
+....................                              else if (ValorPot <= 196)             //Compara el valor de el ADC con 196 
+0069:  MOVF   20,W
+006A:  SUBLW  C4
+006B:  BTFSS  03.0
+006C:  GOTO   073
+....................  
+....................                                  { 
+....................  
+....................                                          output_b (0b00111111);    // Leds activos 
+006D:  BSF    03.5
+006E:  CLRF   06
+006F:  MOVLW  3F
+0070:  BCF    03.5
+0071:  MOVWF  06
+....................  
+....................                                  } 
+0072:  GOTO   082
+....................  
+....................                              else if (ValorPot <= 252)             //Compara el valor de el ADC con 252 
+0073:  MOVF   20,W
+0074:  SUBLW  FC
+0075:  BTFSS  03.0
+0076:  GOTO   07D
+....................  
+....................                                  { 
+....................  
+....................                                        output_b (0b01111111);      // Leds activos 
+0077:  BSF    03.5
+0078:  CLRF   06
+0079:  MOVLW  7F
+007A:  BCF    03.5
+007B:  MOVWF  06
+....................  
+....................                                  } 
+007C:  GOTO   082
+....................  
+....................                              else if (ValorPot <= 255)             //Compara el valor de el ADC con 255 
+....................  
+....................                                    { 
+....................  
+....................                                         output_b (0b11111111);     // Leds activos 
+007D:  BSF    03.5
+007E:  CLRF   06
+007F:  MOVLW  FF
+0080:  BCF    03.5
+0081:  MOVWF  06
+....................  
+....................                                     } 
+0082:  GOTO   023
+....................                } 
+.................... } 
+0083:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F72   HS NOWDT PUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT
