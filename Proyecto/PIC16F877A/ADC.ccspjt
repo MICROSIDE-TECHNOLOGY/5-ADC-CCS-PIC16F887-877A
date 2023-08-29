@@ -1,7 +1,7 @@
 [PROJECT]
 Target=ADC.hex
 Processor_Text=PIC16F877A
-CCSVersion=5.076
+CCSVersion=5.115d
 Compiler=PCM
 [Target Data]
 FileList=ADC.c
@@ -11,10 +11,10 @@ Type=4
 1=ADC.c
 
 [defines]
-buildcount=8
+buildcount=10
 
 [ProjectLog]
-Days=1
+Days=2
 D1=24-02-2022
 D1_L=12
 D1_L1=[38091]Started Editing.
@@ -28,16 +28,26 @@ D1_L8=[58443]Started Editing.
 D1_L9=[58743]Stopped Editing.
 D1_L10=[59202]Started Editing.
 D1_L11=[59676]Stopped Editing.
-TotalEdit=3
+TotalEdit=5
 TotalDebug=0
 D1_E=3
 D1_D=0
 D1_L12=[59852]Project Closed.
+D2=29-08-2023
+D2_L=6
+D2_L1=[52507]Project Opened.
+D2_L2=[52527]Started Editing.
+D2_L3=[52932]Stopped Editing.
+D2_L4=[53291]Started Editing.
+D2_L5=[53303]Stopped Editing.
+D2_E=2
+D2_D=0
+D2_L6=[53303]Project Closed.
 
 [Opened Files]
 1=ADC.c
 t1=1
-Count=3
+Count=1
 2=..\..\..\..\..\Program Files\PICC\Devices\16F877A.h
 t2=237
 3=..\Práctica 7\PWM1.c

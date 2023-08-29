@@ -1,4 +1,4 @@
 青ADC
-   青MAIN  0/118  Ram=0
+   青main  0/142  Ram=0
       団@cinit1  (Inline)  Ram=0
-      青SisInit  0/28  Ram=0
+      青@cinit2  (Inline)  Ram=0
